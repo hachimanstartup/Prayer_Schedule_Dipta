@@ -2,32 +2,25 @@ package dipta.prayerschedule;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +33,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         textView = (TextView) findViewById(R.id.message);
-        String url = "http://www.islamicfinder.org/prayer_service.php?country=japan&city=sendai-shi&state=00&zipcode=&latitude=38.2500&longitude=140.8667&timezone=9&HanfiShafi=1&pmethod=1&fajrTwilight1=10&fajrTwilight2=10&ishaTwilight=10&ishaInterval=30&dhuhrInterval=1&maghribInterval=1&dayLight=0&simpleFormat=xml";
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String calcMethod = sharedPreferences.getString("calcmethod", "");
+        boolean hanafi = sharedPreferences.getBoolean("hanafi", false);
+        int hanafi_int = 1 + ((hanafi) ? 1 : 0);
+        String url = "http://www.islamicfinder.org/prayer_service.php?country=japan&city=sendai-shi&state=00&zipcode=&latitude=38.2500&longitude=140.8667&timezone=9&" +
+                "HanfiShafi=" +
+                Integer.toString(hanafi_int) +
+                "&pmethod=" +
+                calcMethod +
+                "&fajrTwilight1=10&fajrTwilight2=10&ishaTwilight=10&ishaInterval=30&dhuhrInterval=1&maghribInterval=1&dayLight=0&simpleFormat=xml";
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -53,7 +55,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void myClickHandler(View view) {
         // Gets the URL from the UI's text field.
-        String url = "http://www.islamicfinder.org/prayer_service.php?country=japan&city=sendai-shi&state=00&zipcode=&latitude=38.2500&longitude=140.8667&timezone=9&HanfiShafi=1&pmethod=1&fajrTwilight1=10&fajrTwilight2=10&ishaTwilight=10&ishaInterval=30&dhuhrInterval=1&maghribInterval=1&dayLight=0&simpleFormat=xml";
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String calcMethod = sharedPreferences.getString("calcmethod", "");
+        boolean hanafi = sharedPreferences.getBoolean("hanafi", false);
+        int hanafi_int = 1 + ((hanafi) ? 1 : 0);
+        String url = "http://www.islamicfinder.org/prayer_service.php?country=japan&city=sendai-shi&state=00&zipcode=&latitude=38.2500&longitude=140.8667&timezone=9&" +
+                "HanfiShafi=" +
+                Integer.toString(hanafi_int) +
+                "&pmethod=" +
+                calcMethod +
+                "&fajrTwilight1=10&fajrTwilight2=10&ishaTwilight=10&ishaInterval=30&dhuhrInterval=1&maghribInterval=1&dayLight=0&simpleFormat=xml";
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -155,9 +166,15 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            openSettings();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openSettings(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 }

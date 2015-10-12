@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="calcmethodArray">
+        <item>Muslim World League</item>
+        <item>Egyptian General Authority of Survey</item>
+        <item>University of Islamic Sciences, Karachi</item>
+        <item>Umm Al-Qura</item>
+        <item>ISNA</item>
+    </string-array>
+    <string-array name="calcmethodValue">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+</resources>

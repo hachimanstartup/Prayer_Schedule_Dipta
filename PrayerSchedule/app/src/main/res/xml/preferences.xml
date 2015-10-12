@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:title="Calculation Method"
+        android:summary="Select the prayer times calculation method"
+        android:key="calcmethod"
+        android:defaultValue="1"
+        android:entries="@array/calcmethodArray"
+        android:entryValues="@array/calcmethodValue" />
+
     <CheckBoxPreference
-        android:key="pref_sync"
-        android:title="test"
-        android:summary="test"
-        android:defaultValue="true" />
+        android:title="Hanafi Juristic Method"
+        android:summary="Using Hanafi juristic method for asr prayer"
+        android:key="hanafi"
+        android:defaultValue="false" />
 </PreferenceScreen>
